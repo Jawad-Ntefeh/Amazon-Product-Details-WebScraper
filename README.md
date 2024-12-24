@@ -45,7 +45,6 @@ pip install selenium requests
   ```python
   input_element.send_keys("<Your Search Query>" + Keys.ENTER)
   ```
-- Adjust `if product_index < 3` to set the number of products to scrape.
 
 ## Notes
 
