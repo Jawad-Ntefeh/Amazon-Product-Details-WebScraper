@@ -32,7 +32,7 @@ pip install selenium requests
 2. **Run the Script**:
    - Execute the Python script:
      ```bash
-     python demo4.py
+     python main.py
      ```
 
 3. **Outputs**:
