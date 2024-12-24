@@ -11,21 +11,21 @@ import csv
 import requests
 import os
 
-csv_file_name = "product_details.csv"
+# Setup for the webdriver 
 service = Service(executable_path="chromedriver.exe")
 driver = webdriver.Chrome(service=service)
 driver.get("https://www.amazon.sa/-/en")
 driver.maximize_window()
 
-product_index = 0
-
+# Setup for the csv file and product images folder
+csv_file_name = "product_details.csv"
 img_file_name = "product images"
 if not os.path.exists(img_file_name):
     os.makedirs(img_file_name)
 
 input_element = driver.find_element(By.ID, "twotabsearchtextbox")
 input_element.clear()
-input_element.send_keys("shoes" + Keys.ENTER)
+input_element.send_keys("shoes" + Keys.ENTER) # switch "shoes" with whatever products you want to collect info on
 
 WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.ID, "s-result-sort-select"))
@@ -42,6 +42,8 @@ WebDriverWait(driver, 10).until(
 high_to_low_option = driver.find_element(By.XPATH, "//option[@value='price-desc-rank']")
 high_to_low_option.click()
 time.sleep(3)
+
+product_index = 0
 
 shoes = {
     "names" : [],
@@ -88,7 +90,7 @@ for product in products:
         shoes["outer materials"].append(values[2])
         shoes["closure types"].append(values[3])
         
-        # Product Details 2 needs fix
+        # Product Details 2
         product_details2 = []
         ul_list = driver.find_element(By.XPATH,"//div[@id='detailBullets_feature_div']")
         details = ul_list.find_elements(By.TAG_NAME, "li")
@@ -123,7 +125,7 @@ for product in products:
         with open(img_path, "wb") as file:
             file.write(response.content)
     
-        # go back to results
+        # go back to results to select another product
         driver.back()
         product_index +=1
 
